@@ -3,7 +3,7 @@ class PrimitiveVsWrapper {
         /*
          * 1. Phân cấp kiểu dữ liệu (Widening Conversion):
          * byte (8b) < short (16b) < int (32b) < long (64b) < float (32b) < double (64b)
-         * 
+         *
          * ĐIỂM CẦN LƯU Ý: Tại sao long (64-bit) < float (32-bit)?
          * - Thứ tự này dựa trên KHOẢNG GIÁ TRỊ (Range), không phải số bits.
          * - float dùng cơ chế số thực dấu phẩy động (exponential) nên có thể biểu diễn
