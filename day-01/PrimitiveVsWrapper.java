@@ -1,54 +1,107 @@
-class PrimitiveVsWrapper {
+/**
+ * Ngày 1: Primitive Types vs Wrapper Classes
+ *
+ * Mục tiêu:
+ * - Phân biệt Primitive types và Wrapper Classes
+ * - Hiểu Autoboxing/Unboxing
+ */
+public class PrimitiveVsWrapper {
     public static void main(String[] args) {
-        /*
-         * 1. Phân cấp kiểu dữ liệu (Widening Conversion):
-         * byte (8b) < short (16b) < int (32b) < long (64b) < float (32b) < double (64b)
-         *
-         * ĐIỂM CẦN LƯU Ý: Tại sao long (64-bit) < float (32-bit)?
-         * - Thứ tự này dựa trên KHOẢNG GIÁ TRỊ (Range), không phải số bits.
-         * - float dùng cơ chế số thực dấu phẩy động (exponential) nên có thể biểu diễn
-         * những con số cực lớn mà long (số nguyên) không thể chứa được.
-         * - Do đó, Java cho phép tự động chuyển (widening) từ long sang float.
-         */
+        System.out.println("=== 1. PRIMITIVE TYPES ===\n");
 
-        // primitive: Lưu giá trị thực, không thể là null. Tốn ít bộ nhớ.
+        /*
+         * Primitive types: Lưu GIÁ TRỊ THỰC trong Stack
+         * - Không thể là null
+         * - Tốn ít bộ nhớ
+         * - Không có methods
+         */
         int a = 10;
+        double b = 3.14;
+        boolean c = true;
+        char d = 'A';
 
-        // Wrapper class: Là Object, có thể là null. Dùng trong Collections (ArrayList,
-        // HashMap).
-        Integer b = null;
+        System.out.println("int a = " + a);
+        System.out.println("double b = " + b);
+        System.out.println("boolean c = " + c);
+        System.out.println("char d = " + d);
 
-        System.out.println("--- So sánh Primitive vs Wrapper ---");
-        System.out.println("Giá trị a (int): " + a);
-        System.out.println("Giá trị b (Integer): " + b);
+        // int e = null; // ❌ LỖI! Primitive không thể null
+
+        System.out.println("\n=== 2. WRAPPER CLASSES ===\n");
 
         /*
-         * 2. Lưu ý về NullPointerException (NPE):
-         * Lỗi bạn gặp khi chạy code cũ là do ép kiểu b (đang null) sang int để tính
-         * toán.
+         * Wrapper classes: Lưu OBJECT trong Heap
+         * - Có thể là null
+         * - Dùng trong Collections (ArrayList, HashMap)
+         * - Có methods hữu ích
          */
+        Integer x = 10;        // Integer thay cho int
+        Double y = 3.14;       // Double thay cho double
+        Boolean z = true;      // Boolean thay cho boolean
+        Character w = 'A';     // Character thay cho char
+
+        Integer nullable = null; // ✅ OK! Wrapper có thể null
+
+        System.out.println("Integer x = " + x);
+        System.out.println("Double y = " + y);
+        System.out.println("Boolean z = " + z);
+        System.out.println("Integer nullable = " + nullable);
+
+        System.out.println("\n=== 3. AUTOBOXING (Primitive → Wrapper) ===\n");
+
+        /*
+         * Autoboxing: Java TỰ ĐỘNG chuyển primitive → wrapper
+         */
+        int primitiveInt = 100;
+        Integer wrapperInt = primitiveInt; // Autoboxing: int → Integer
+
+        System.out.println("primitiveInt = " + primitiveInt);
+        System.out.println("wrapperInt (autoboxed) = " + wrapperInt);
+
+        System.out.println("\n=== 4. UNBOXING (Wrapper → Primitive) ===\n");
+
+        /*
+         * Unboxing: Java TỰ ĐỘNG chuyển wrapper → primitive
+         */
+        Integer wrapperNum = 200;
+        int primitiveNum = wrapperNum; // Unboxing: Integer → int
+
+        System.out.println("wrapperNum = " + wrapperNum);
+        System.out.println("primitiveNum (unboxed) = " + primitiveNum);
+
+        System.out.println("\n=== 5. NGUY HIỂM: NullPointerException ===\n");
+
+        /*
+         * ⚠️ CẢNH BÁO: Unboxing null sẽ gây NullPointerException!
+         */
+        Integer nullWrapper = null;
+
         try {
-            // int sum = a + b; // Sẽ gây lỗi NullPointerException vì b là null
-            // System.out.println("Sum: " + sum);
+            int result = nullWrapper; // ❌ NullPointerException!
+            System.out.println("Result: " + result);
         } catch (NullPointerException e) {
-            System.out.println("Lỗi: Không thể tính toán với giá trị null!");
+            System.out.println("❌ LỖI NullPointerException!");
+            System.out.println("   Không thể unbox null thành primitive!");
         }
 
-        // 3. Các kiểu dữ liệu khác
-        double c = 0.5;
-        Double d = 0.5; // Autoboxing: Tự động chuyển 0.5 (double) sang Double object
+        System.out.println("\n=== 6. SO SÁNH: == vs .equals() ===\n");
 
-        boolean e = true;
-        Boolean f = Boolean.FALSE;
+        /*
+         * Primitive: dùng == (so sánh giá trị)
+         * Wrapper: nên dùng .equals() (so sánh nội dung)
+         */
+        int p1 = 100;
+        int p2 = 100;
+        System.out.println("Primitive: p1 == p2 → " + (p1 == p2)); // true
 
-        float g = 1.2f; // Phải có hậu tố 'f'
-        Float h = 1.2f;
-        long i = 1000L; // Phải có hậu tố 'L'
-        Long j = 1000L;
+        Integer w1 = 1000;
+        Integer w2 = 1000;
+        System.out.println("Wrapper: w1 == w2 → " + (w1 == w2)); // false (khác object)
+        System.out.println("Wrapper: w1.equals(w2) → " + w1.equals(w2)); // true ✅
 
-        System.out.println("\n--- Các kiểu khác ---");
-        System.out.println("Double object: " + d);
-        System.out.println("Boolean object: " + f);
-        System.out.println("Float primitive: " + g);
+        // Lưu ý: Integer từ -128 đến 127 được cache, == có thể true
+        Integer cached1 = 100;
+        Integer cached2 = 100;
+        System.out.println("Cached: cached1 == cached2 → " + (cached1 == cached2)); // true (do cache)
     }
 }
