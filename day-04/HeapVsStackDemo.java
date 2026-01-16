@@ -32,6 +32,13 @@ public class HeapVsStackDemo {
         // Tuy nhiên, vì copy địa chỉ nên hàm con có thể sửa nội dung object thật trong Heap
         changeObject(p);
         System.out.println("Sau khi gọi hàm changeObject(p), p.name = " + p.name + " (Đã đổi!)");
+
+        // Wrapper Class (Integer) - Immutable Object
+        // Integer là Object, nhưng bất biến (Immutable).
+        // Khi thay đổi giá trị, Java tạo ra Object mới, không sửa Object cũ.
+        Integer b = 10;
+        changeInteger(b);
+        System.out.println("Sau khi gọi hàm changeInteger(b), b = " + b + " (Không đổi - do Immutable)");
     }
 
     // Biến 'num' là bản copy của 'a', nằm trong Stack frame mới của hàm này
@@ -44,6 +51,15 @@ public class HeapVsStackDemo {
     // Dùng 'personRef' để thay đổi dữ liệu trong Heap -> 'p' cũng thấy thay đổi
     public static void changeObject(Person personRef) {
         personRef.name = "Updated Name";
+    }
+
+    // Biến 'numWrapper' là bản copy của tham chiếu 'b'.
+    // Nhưng Integer là IMMUTABLE (Bất biến).
+    // Dòng 'numWrapper = 88;' KHÔNG thay đổi giá trị trong Object cũ,
+    // mà nó tạo ra một Object Integer(88) mới và gán cho biến local 'numWrapper'.
+    // Biến 'b' ở hàm main vẫn trỏ tới Object Integer(10) cũ.
+    public static void changeInteger(int numWrapper) {
+        numWrapper = 88;
     }
 }
 
