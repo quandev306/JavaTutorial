@@ -31,9 +31,10 @@ public class PrimitiveVsWrapper {
 
         /*
          * Wrapper classes: Lưu OBJECT trong Heap
-         * - Có thể là null
+         * - Có thể là null trong nhiều trường hợp phổ biến như dùng cho DTO, Entity, Form hoặc Request 
          * - Dùng trong Collections (ArrayList, HashMap)
          * - Có methods hữu ích
+         * - Tốn nhiều bộ nhớ hơn primitive
          */
         Integer x = 10;        // Integer thay cho int
         Double y = 3.14;       // Double thay cho double
